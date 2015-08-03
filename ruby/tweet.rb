@@ -15,9 +15,11 @@ class Tweet
     file_type = File.extname(tweet_filename)
     if file_type == ".json"
       @tweets = JSON.parse(tweet_filename)
-    else
+    elsif file_type == ".xml"
       tmp = REXML::Document.new(File.new(tweet_filename))
       @tweets = Hash.from_xml(tmp.to_s)
+    else
+      raise "input file name is not json nor xml."
     end
   end
 
@@ -28,13 +30,13 @@ class Tweet
       nm = Natto::MeCab.new
       regex = /^地名/
       #regex = /^名詞,固有名詞/
-      nm.parse(texts) do |node| # nouns to word_array
+      nm.parse(tweet) do |node| # nouns to word_array
         if node.feature =~ regex #.force_encoding("UTF-8")
           word_array << node.surface #.force_encoding("UTF-8")
         end
       end
 
-      tmp = nm.parse(texts)
+      tmp = nm.parse(tweet)
       p tmp
 
       # word_hash: {["word" => count],...}

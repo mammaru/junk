@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require 'date'
 
 @data = Hash.new{ |hash,key| hash[key] = Hash.new(0) }
@@ -30,7 +28,6 @@ start = Time.local(2013, 12, 1)
   data = @data[str]
   row = [str]
   names.each do |n|
-
-    row << [ 
+    row << [
   end
 end

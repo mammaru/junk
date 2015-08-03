@@ -1,6 +1,5 @@
 # coding: utf-8
 require 'natto'
-MAX_NUMBER_OF_ENTRIES_PER_FEED = 50
 
 def word_count(entries)
   titles = ""
@@ -20,7 +19,7 @@ def word_count(entries)
       word_array << node.surface #.force_encoding("UTF-8")
     end
   end
-  
+
   tmp = nm.parse(texts)
   p tmp
 
@@ -30,14 +29,14 @@ def word_count(entries)
     word_hash[key] ||= 0
     word_hash[key] += 1
   end
-  
+
   regex_white = /[一-龠]+|[ぁ-ん]+|[ァ-ヴー]+|[a-zA-Z]+|[ａ-ｚＡ-Ｚ]+/ # white list
   #regex_black = Regexp.new(/[!-¥:-@≠\[-`{-~\]]/) # black list
   #word_hash.delete_if{|k, v| k =~ regex_black by black list
   word_hash = word_hash.select{|k, v| k =~ regex_white}.to_h # filtering by white list
 
   word_hash = word_hash.sort_by {|k, v| v}.to_h # sort by word count
-  
+
   words_total = word_hash.values.inject(0){|sum, i| sum+i}
   #p words_total
   word_hash_normalized = word_hash.map {|k, v| [k, v.quo(words_total).to_f]}.to_h

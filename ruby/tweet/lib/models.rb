@@ -1,11 +1,16 @@
 require 'rubygems'
 require 'active_record'
 
-# Definition of object mapped to database 
+# Definition of objects mapped to database 
 class Tweet < ActiveRecord::Base
-  self.table_name = "tweets"
+  belongs_to :user
+  has_one :autonomy 
 end
 
 class User < ActiveRecord::Base
+  has_many :tweets dependent: :destory
+end
 
+class Autonomy < ActiveRecord::Base
+  has_many :tweets
 end
